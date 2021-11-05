@@ -1,2 +1,7 @@
 # turtlegym
-Some simple data sources in various formats
+
+This repository is organised as follows:
+
+- __app/:__ A web application that allows for users to edit turtle graphics on their mobile device.
+
+- Some simple data sources in various formats.

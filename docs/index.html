@@ -8,44 +8,75 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-    <title>Turtle Gym</title>
+    <title>TurtleGym</title>
 </head>
 <body>
+
+<!-- SOME RESOURCES -->
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+  </symbol>
+  <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+  </symbol>
+  <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+  </symbol>
+</svg>
 
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">
     <img src="turtle-logo.png" alt="Logo" style="width:40px;">
     </a>
-    <h4 class="text-white">&nbsp;Turtle Gym&nbsp;</h4>
+    <h4 class="text-white">&nbsp;TurtleGym&nbsp;</h4>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="mynavbar">
 
       <div class="form-floating mb-1">
-      <select class="form-select form-control-sm col-3" aria-describedby="basic-addon1" aria-label="Example" id="ex_id">
+      <select class="form-select form-control-sm col-3" aria-label="Example" id="ex_id">
       </select>
-      <label for="ex_id">Example</label>
+      <label for="ex_id">Load example</label>
       </div>
 
       <div class="form-floating mb-1">
-      <select class="form-select form-control-sm col-3" aria-describedby="basic-addon1" aria-label="Forward style" id="sel_id">
+      <select class="form-select form-control-sm col-3" aria-label="Cut shape" id="shape_id">
+      </select>
+      <label for="shape_id">Cut shape</label>
+      </div>
+
+      <div class="form-floating mb-1">
+      <select class="form-select form-control-sm col-3" aria-label="Forward style" id="sel_id">
       </select>
       <label for="sel_id">Style</label>
+      </div>
+
+      <div class="form-floating mb-1">
+      <select class="form-select form-control-sm col-3" aria-label="Data stream" id="datastream_id">
+      </select>
+      <label for="datastream_id">Data stream</label>
+      </div>
+
+      <div class="form-check">
+	<input class="form-check-input" type="checkbox" value="" id="helperGridCheckbox" checked>
+	<label class="form-check-label text-light" for="helperGridCheckbox">
+	  Helper grid
+	</label>
       </div>
 
     </div>
   </div>
 </nav>
 
-<p>
-<div class="form-floating">
-  <textarea class="form-control" placeholder="Write tutle commands here" id="cmds_id" style="height: 100px"></textarea>
-  <label for="cmds_id">Turtle commands</label>
-</div>
-<div id="notify_id"></div>
-</p>
+    <table style="width:100%;"><tr><td><span class="form-text">Commands:</span></td><td style="text-align:right;"><span class="form-text text-end" id="notify_id"></span></td></tr></table>
+    <textarea class="form-control" placeholder="Write tutle commands here" id="cmds_id" style="height: 100px"></textarea>
+
+  <!--  <label for="cmds_id">TurtleGym commands</label>-->
+<p></p>
 
 <div id="drawarea_id">
 <img src="turtle-car.svg" class="img-fluid" alt="turtle car">
@@ -54,7 +85,7 @@
 <div>
 <nav class="navbar fixed-bottom navbar-light bg-light">
   <div class="container-fluid">
-    <a class="nav-link" id="about_id">About</a>
+    <a class="nav-link" data-bs-toggle="modal" data-bs-target="#aboutModal">About</a>
     <a class="nav-link" data-bs-toggle="modal" data-bs-target="#helpModal">Help</a>
     <form class="d-flex">
       <button class="btn btn-primary" type="button" id="submit_id" data-bs-toggle="modal" data-bs-target="#submitModal">Submit</button>
@@ -63,7 +94,7 @@
 </nav>
 </div>
 
-<!-- Modals -->
+<!-- Help Modal -->
 <div class="modal" id="helpModal" tabindex="-1">
   <div class="modal-dialog modal-fullscreen">
     <div class="modal-content">
@@ -73,7 +104,7 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <table class="table">
+        <table class="table table-sm">
 	  <thead><tr><th scope="col">Cmd</th><th scope="col">Meaning</th></tr></thead>
 	  <tbody>
 	  <tr><td scope="row">F <i>n</i></td><td>Forward <i>n</i> steps</td></tr>
@@ -81,10 +112,23 @@
 	  <tr><td scope="row">R/L <i>n</i></td><td>Right/Left <i>n</i> degrees</td></tr>
           <tr><td scope="row">[<i>c</i>]<i>n</i></td><td>Repeat <i>c</i> <i>n</i> times</td></tr>
 	  <tr><td scope="row">X/Y <i>n</i></td><td>Set x/y position to <i>n</i></td></tr>
+	  <tr><td scope="row">A <i>n</i></td><td>Set angle to <i>n</i> degrees</td></tr>
 	  <tr><td scope="row">&lt;red&gt;</td><td>Red pen (cut)</td></tr>
 	  <tr><td scope="row">&lt;blue&gt;</td><td>Blue pen (ingrave)</td></tr>
 	  </tbody>
         </table>
+	<p>
+	The <i>drawing area</i> is 2000 units wide and 2000 units high. The
+	coordinate (0,0) is in the lower left corner. The turtle is
+	initially positioned in the middle of the drawing area
+	(looking up).
+	</p>
+	<p>
+	You can adjust the <i>forward style</i> (straight or twiggle) and the
+	<i>data source</i> (for twigly moves) in the menu. Here you can also
+	disable and enable the helper grid, load examples and choose a
+	<i>cut shape</i> for the final printing.
+	</p>
       </div>
       <div class="modal-footer">
 	<div class="d-grid col-3 mx-auto">
@@ -95,6 +139,33 @@
   </div>
 </div>
 
+<!-- About Modal -->
+<div class="modal" id="aboutModal" tabindex="-1">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-white">
+	<img src="turtle-logo.png" alt="Logo" style="width:40px;">&nbsp;
+        <h4 class="modal-title">&nbsp;About&nbsp;</h4>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+	<p>TurtleGym is based on <a href="http://elsman.com/mlkit">MLKit</a>, a full-blown Standard ML compiler, which, for this project, compiles Standard ML to JavaScript.</p>
+	<p></p>
+	<img class="img-fluid" alt="Logo" src="turtle-logo.png">
+	<p></p>
+	<p>Copyright (c) 2021, <a href="http://elsman.com">Martin Elsman</a>.</p>
+	<p>Data sources fetched from the Internet and from <a href="http://statbank.dk">Statistics Denmark</a>.</p>
+      </div>
+      <div class="modal-footer">
+	<div class="d-grid col-3 mx-auto">
+	  <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Ok</button>
+	</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Submit Modal -->
 <div class="modal" id="submitModal" tabindex="-1">
   <div class="modal-dialog modal-fullscreen">
     <div class="modal-content">
@@ -123,6 +194,30 @@
 	  <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
 	</div>
       </form>
+    </div>
+  </div>
+</div>
+
+<!-- Receipt Modal -->
+<div class="modal" id="receiptModal" tabindex="-1">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-white">
+	<img src="turtle-logo.png" alt="Logo" style="width:40px;">&nbsp;
+        <h4 class="modal-title">&nbsp;Receipt&nbsp;</h4>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+	<p>Thank you for your submission</p>
+
+	<p>Your personalised latest submission will soon be printed and delivered!</p>
+	<p><div id="receiptBody"></div>
+      </div>
+      <div class="modal-footer">
+	<div class="d-grid col-3 mx-auto">
+	  <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Ok</button>
+	</div>
+      </div>
     </div>
   </div>
 </div>
